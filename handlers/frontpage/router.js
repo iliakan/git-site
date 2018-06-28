@@ -5,6 +5,6 @@ var path = require('path');
 var router = module.exports = new Router();
 
 router.get('/', async function (ctx) {
-  ctx.body = this.render('index');
+  ctx.body = ctx.render('index');
 
 });

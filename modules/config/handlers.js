@@ -34,6 +34,8 @@ let handlers = [
 
   'conditional',
 
+  'frontpage',
+
   process.env.NODE_ENV=='development' && 'dev'
 ].filter(Boolean);
 

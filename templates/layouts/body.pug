@@ -20,10 +20,3 @@ block body
     .page__inner
       main(class=(mainclass ? mainclass : 'main') + ' ' + [layout_main_class])
         block main
-    if sidebar
-      +b(class="sidebar page__sidebar #{sidebar.class}")
-        +e('button').toggle(data-sidebar-toggle)
-        block sidebar-buttons
-        +e.inner
-          +e.content
-            block sidebar
