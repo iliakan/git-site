@@ -68,7 +68,7 @@ module.exports = function(config) {
     entry: {
       styles:                    config.tmpRoot + '/styles.styl',
       head:                      'client/head',
-      tutorial:                  'tutorial/client',
+      main:                  'client/main',
       footer:                    'client/footer',
     },
 
@@ -211,9 +211,7 @@ module.exports = function(config) {
       function() {
         // create config.tmpRoot/styles.styl with common styles & styles from handlers
         let content = `
-          @require '~styles/common.styl'
-
-          @require '~styles/${config.lang}.styl'
+          @require '~styles/main.styl'
         `;
 
         config.handlers.forEach(handler => {

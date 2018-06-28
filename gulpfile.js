@@ -17,11 +17,6 @@ process.on('uncaughtException', function(err) {
   process.exit(255);
 });
 
-const jsSources = [
-  'handlers/**/*.js', 'modules/**/*.js', 'tasks/**/*.js', '*.js'
-];
-
-
 
 function lazyRequireTask(path) {
   let args = [].slice.call(arguments, 1);
@@ -60,10 +55,6 @@ function requireModuleTasks(moduleName) {
 
 }
 
-// usage: gulp db:load --from fixture/init --harmony
-gulp.task('db:load', lazyRequireTask('./tasks/dbLoad'));
-gulp.task('db:clear', lazyRequireTask('./tasks/dbClear'));
-
 gulp.task("nodemon", lazyRequireTask('./tasks/nodemon', {
   // shared client/server code has require('template.jade) which precompiles template on run
   // so I have to restart server to pickup the template change
@@ -72,7 +63,7 @@ gulp.task("nodemon", lazyRequireTask('./tasks/nodemon', {
   nodeArgs: process.env.NODE_DEBUG  ? ['--debug'] : [],
   script: "./bin/server.js",
   //ignoreRoot: ['.git', 'node_modules'].concat(glob.sync('{handlers,modules}/**/client')), // ignore handlers' client code
-  ignore: ['**/client/', '**/photoCut/'], // ignore handlers' client code
+  ignore: ['**/client/'], // ignore handlers' client code
   watch:  ["handlers", "modules"]
 }));
 
@@ -90,21 +81,6 @@ gulp.task("client:livereload", lazyRequireTask("./tasks/livereload", {
   ]
 }));
 
-requireModuleTasks('tutorial');
-
-let testSrcs = ['{handlers,modules}/**/test/**/*.js'];
-// on Travis, keys are required for E2E Selenium tests
-// for PRs there are no keys, so we disable E2E
-if (!process.env.TEST_E2E || process.env.CI && process.env.TRAVIS_SECURE_ENV_VARS=="false") {
-  testSrcs.push('!{handlers,modules}/**/test/e2e/*.js');
-}
-
-gulp.task("test", lazyRequireTask('./tasks/test', {
-  src: testSrcs,
-  reporter: 'spec',
-  timeout: 100000 // big timeout for webdriver e2e tests
-}));
-
 
 gulp.task('watch', lazyRequireTask('./tasks/watch', {
   root:        __dirname,
@@ -118,13 +94,6 @@ gulp.task('watch', lazyRequireTask('./tasks/watch', {
   ]
 }));
 
-gulp.task('deploy', function(callback) {
-  runSequence("deploy:build", "deploy:update", callback);
-});
-
-gulp.task("client:sync-resources", lazyRequireTask('./tasks/syncResources', {
-  assets: 'public'
-}));
 
 
 gulp.task('client:minify', lazyRequireTask('./tasks/minify'));
@@ -140,12 +109,7 @@ gulp.task('build', function(callback) {
 
 gulp.task('server', lazyRequireTask('./tasks/server'));
 
-gulp.task('edit', ['tutorial:importWatch', "client:sync-resources", 'client:livereload', 'server']);
-
-
-gulp.task('dev', function(callback) {
-  runSequence("tutorial:import", "client:sync-resources", ['nodemon', 'client:livereload', 'client:webpack', 'watch'], callback);
-});
+gulp.task('dev', ['nodemon', 'client:livereload', 'client:webpack', 'watch']);
 
 gulp.on('err', function(gulpErr) {
   if (gulpErr.err) {

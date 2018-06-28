@@ -13,7 +13,6 @@ const t = require('i18n');
 const url = require('url');
 const validate = require('validate');
 const pluralize = require('textUtil/pluralize');
-const BasicParser = require('markit').BasicParser;
 
 // public.versions.json is regenerated and THEN node is restarted on redeploy
 // so it loads a new version.
@@ -76,14 +75,6 @@ function addStandardHelpers(locals, ctx) {
           return '\\u' + ('0000' + c.charCodeAt(0).toString(16)).slice(-4);
         }
       );
-  };
-
-  locals.markit = function(text, options) {
-    return new BasicParser(options).render(text);
-  };
-
-  locals.markitInline = function(text, options) {
-    return new BasicParser(options).renderInline(text);
   };
 
   locals.t = t;

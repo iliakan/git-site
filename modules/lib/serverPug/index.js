@@ -29,7 +29,6 @@ require.extensions['.pug'] = function(module, filename) {
 
 };
 
-require('./filterMarkit');
 
 require('./filterUglify');
 
