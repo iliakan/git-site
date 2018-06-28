@@ -1,14 +1,16 @@
 
 extends /layouts/body
 
-
-block append variables
-
-  - var layout_main_class = "main_width-limit"
-  - var title = 'Что делать после курсов?';
-  - var sitetoolbar = true
+include /blocks/video/index
 
 block main
+  -
+    let videos = [{
+      name: "First"
+      }, {
+      name: "Second"
+    }]
 
-  p HELLO
+
+  +video({text:"HELLO WORLD", videos})
 

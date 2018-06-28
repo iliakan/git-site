@@ -18,7 +18,7 @@ const fse = require('fs-extra');
 // NB: includes angular-*
 let noProcessModulesRegExp = /node_modules\/(angular|prismjs)/;
 
-module.exports = function(config) {
+module.exports = function (config) {
 // tutorial.js?hash
 // tutorial.hash.js
   function extHash(name, ext, hash) {
@@ -36,7 +36,7 @@ module.exports = function(config) {
   let webpackConfig = {
     output: {
       // fs path
-      path:       path.join(config.publicRoot, 'pack'),
+      path: path.join(config.publicRoot, 'pack'),
       // path as js sees it
       // if I use another domain here, need enable Allow-Access-.. header there
       // and add  to scripts, to let error handler track errors
@@ -45,11 +45,11 @@ module.exports = function(config) {
       // в prod-режиме не можем ?, т.к. CDN его обрезают, поэтому [hash] в имени
       //  (какой-то [hash] здесь необходим, иначе к chunk'ам типа 3.js, которые генерируются require.ensure,
       //  будет обращение без хэша при загрузке внутри сборки. при изменении - барузерный кеш их не подхватит)
-      filename:   extHash("[name]", 'js'),
+      filename: extHash("[name]", 'js'),
 
       chunkFilename: extHash("[name]-[id]", 'js'),
-      library:       '[name]',
-      pathinfo:      process.env.NODE_ENV == 'development'
+      library: '[name]',
+      pathinfo: process.env.NODE_ENV == 'development'
     },
 
     cache: process.env.NODE_ENV == 'development',
@@ -61,15 +61,15 @@ module.exports = function(config) {
     watch: process.env.NODE_ENV == 'development',
 
     devtool: process.env.NODE_ENV == 'development' ? "cheap-inline-module-source-map" : // try "eval" ?
-               process.env.NODE_ENV == 'production' ? 'source-map' : false,
+      process.env.NODE_ENV == 'production' ? 'source-map' : false,
 
     profile: true,
 
     entry: {
-      styles:                    config.tmpRoot + '/styles.styl',
-      head:                      'client/head',
-      main:                  'client/main',
-      footer:                    'client/footer',
+      styles: config.tmpRoot + '/styles.styl',
+      head: 'client/head',
+      main: 'client/main',
+      footer: 'client/footer',
     },
 
     module: {
@@ -139,7 +139,7 @@ module.exports = function(config) {
                   use: [
                     rupture(),
                     nib(),
-                    function(style) {
+                    function (style) {
                       style.define('lang', config.lang);
                     }
                   ]
@@ -153,7 +153,7 @@ module.exports = function(config) {
           use: extHash('file-loader?name=[path][name]', '[ext]')
         }
       ],
-      noParse: function(path) {
+      noParse: function (path) {
         /*
          if (path.indexOf('!') != -1) {
          path = path.slice(path.lastIndexOf('!') + 1);
@@ -186,7 +186,7 @@ module.exports = function(config) {
 
     plugins: [
       new webpack.DefinePlugin({
-        LANG:      JSON.stringify(config.lang),
+        LANG: JSON.stringify(config.lang),
         IS_CLIENT: true
       }),
 
@@ -208,7 +208,7 @@ module.exports = function(config) {
 
       new ExtractTextPlugin(extHash('[name]', 'css', '[contenthash]'), {allChunks: true}),
 
-      function() {
+      function () {
         // create config.tmpRoot/styles.styl with common styles & styles from handlers
         let content = `
           @require '~styles/main.styl'
@@ -228,8 +228,8 @@ module.exports = function(config) {
       },
 
       {
-        apply: function(compiler) {
-          compiler.plugin("done", function(stats) {
+        apply: function (compiler) {
+          compiler.plugin("done", function (stats) {
             stats = stats.toJson();
             fs.writeFileSync(`${config.tmpRoot}/stats.json`, JSON.stringify(stats));
           });
@@ -238,14 +238,14 @@ module.exports = function(config) {
     ],
 
     recordsPath: path.join(config.tmpRoot, 'webpack.json'),
-    devServer:   {
-      port:               3001, // dev server itself does not use it, but outer tasks do
+    devServer: {
+      port: 3001, // dev server itself does not use it, but outer tasks do
       historyApiFallback: true,
-      hot:                true,
-      watchDelay:         10,
+      hot: true,
+      watchDelay: 10,
       //noInfo: true,
-      publicPath:         process.env.STATIC_HOST + ':3001/pack/',
-      contentBase:        config.publicRoot
+      publicPath: process.env.STATIC_HOST + ':3001/pack/',
+      contentBase: config.publicRoot
     }
   };
 
