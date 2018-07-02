@@ -4,19 +4,24 @@ let fs = require('fs');
 let nib = require('nib');
 let rupture = require('rupture');
 let path = require('path');
+let chokidar = require('chokidar');
 let config = require('config');
 let webpack = require('webpack');
-let CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 let WriteVersionsPlugin = require('lib/webpack/writeVersionsPlugin');
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let CssWatchRebuildPlugin = require('lib/webpack/cssWatchRebuildPlugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const fse = require('fs-extra');
+const glob = require('glob');
 
 // 3rd party / slow to build modules
 // no webpack dependencies inside
 // no es6 (for 6to5 processing) inside
 // NB: includes angular-*
 let noProcessModulesRegExp = /node_modules\/(angular|prismjs)/;
+
+let devMode = process.env.NODE_ENV == 'development';
 
 module.exports = function (config) {
 // tutorial.js?hash
@@ -49,27 +54,28 @@ module.exports = function (config) {
 
       chunkFilename: extHash("[name]-[id]", 'js'),
       library: '[name]',
-      pathinfo: process.env.NODE_ENV == 'development'
+      pathinfo: devMode
     },
 
-    cache: process.env.NODE_ENV == 'development',
+    cache: devMode,
+
+
+    mode: devMode ? 'development' : 'production', // for tests uses prod too
 
     watchOptions: {
-      aggregateTimeout: 10
+      aggregateTimeout: 10,
+      ignored: /node_modules/
     },
 
-    watch: process.env.NODE_ENV == 'development',
+    watch: devMode,
 
-    devtool: process.env.NODE_ENV == 'development' ? "cheap-inline-module-source-map" : // try "eval" ?
+    devtool: devMode ? "cheap-inline-module-source-map" : // try "eval" ?
       process.env.NODE_ENV == 'production' ? 'source-map' : false,
 
     profile: false,
 
     entry: {
-      styles: 'styles/main.styl',
-      head: 'client/head',
-      main: 'client/main',
-      footer: 'client/footer',
+      styles: config.tmpRoot + '/styles.styl'
     },
 
     module: {
@@ -111,42 +117,39 @@ module.exports = function (config) {
         },
         {
           test: /\.styl$/,
-          // ExtractTextPlugin breaks HMR for CSS
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  minimize: process.env.NODE_ENV == 'production' ? true : false,
-                  importLoaders: 1
-                }
+          // MiniCssExtractPlugin breaks HMR for CSS
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: [
+                  require('autoprefixer')
+                ]
+              }
+            },
+            'hover-loader',
+            {
+              loader: 'stylus-loader',
+              options: {
+                linenos: true,
+                'resolve url': true,
+                use: [
+                  rupture(),
+                  nib(),
+                  function (style) {
+                    style.define('lang', config.lang);
+                  }
+                ]
               },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  plugins: [
-                    require('autoprefixer')
-                  ]
-                }
-              },
-              'hover-loader',
-              {
-                loader: 'stylus-loader',
-                options: {
-                  linenos: true,
-                  'resolve url': true,
-                  use: [
-                    rupture(),
-                    nib(),
-                    function (style) {
-                      style.define('lang', config.lang);
-                    }
-                  ]
-                },
-              },
-            ]
-          })
+            }
+          ]
         },
         {
           test: /\.(png|jpg|gif|woff|eot|otf|ttf|svg)$/,
@@ -199,14 +202,16 @@ module.exports = function (config) {
       // https://github.com/webpack/webpack/issues/198
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
-      // any common chunks from entries go to head
-      new CommonsChunkPlugin({
-        name: 'head',
-        filename: extHash('head', 'js')
-      }),
       new WriteVersionsPlugin(path.join(config.cacheRoot, 'webpack.versions.json')),
 
-      new ExtractTextPlugin(extHash('[name]', 'css', '[contenthash]'), {allChunks: true}),
+      new MiniCssExtractPlugin({
+        filename: extHash("[name]", 'css'),
+        chunkFilename: extHash("[id]", 'css'),
+      }),
+
+      new CssWatchRebuildPlugin({
+        styles: '{templates,styles}'
+      }),
 
       {
         apply: function (compiler) {
@@ -227,6 +232,30 @@ module.exports = function (config) {
       //noInfo: true,
       publicPath: process.env.STATIC_HOST + ':3001/pack/',
       contentBase: config.publicRoot
+    },
+
+
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: 2,
+          uglifyOptions: {
+            ecma: 8,
+            warnings: false,
+            compress: {
+              drop_console: true,
+              drop_debugger: true
+            },
+            output: {
+              beautify: true,
+              indent_level: 0 // for error reporting, to see which line actually has the problem
+              // source maps actually didn't work in Qbaka that's why I put it here
+            }
+          }
+        }),
+        new OptimizeCSSAssetsPlugin({})
+      ]
     }
   };
 
@@ -236,7 +265,7 @@ module.exports = function (config) {
     webpackConfig.plugins.push(
       function clearBeforeRun() {
         function clear(compiler, callback) {
-          fse.removeSync(this.options.output.path + '/*');
+          fse.removeSync(webpackConfig.output.path + '/*');
           callback();
         }
 
@@ -244,26 +273,7 @@ module.exports = function (config) {
         // thus removing unchanged files
         // => use this plugin only in normal run
         this.plugin('run', clear);
-      },
-
-      /* jshint -W106 */
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: 2,
-        uglifyOptions: {
-          ecma: 8,
-          warnings: false,
-          compress: {
-            drop_console: true,
-            drop_debugger: true
-          },
-          output: {
-            beautify: true,
-            indent_level: 0 // for error reporting, to see which line actually has the problem
-            // source maps actually didn't work in Qbaka that's why I put it here
-          }
-        }
-      })
+      }
     );
   }
 
