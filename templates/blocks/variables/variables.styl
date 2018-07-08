@@ -1,0 +1,50 @@
+// Colors
+
+color-red-accent = #D44242
+
+color-grey-25 = #3b3b3b
+color-grey-60 = #919191
+color-grey-80 = #c6c6c6
+color-grey-90 = #e2e2e2
+
+// Spacing
+
+space-xxs = 2px
+space-xs = 4px
+space-s = 8px
+space-m = 12px
+space-l = 16px
+space-xl = 24px
+space-xxl = 40px
+space-default = 16px
+
+space-inset-default = 24px 24px 24px 24px
+space-inset-squish = 24px 12px 24px 12px
+space-inset-stretch = 16px 8px 16px 8px
+
+space-stack-default = 0 0 16px 0
+space-stack-xs = 0 0 4px 0
+space-stack-s = 0 0 8px 0
+space-stack-m = 0 0 16px 0
+space-stack-l = 0 0 32px 0
+space-stack-xl = 0 0 64px 0
+
+// Typography
+
+font-sans-serif = Apercu Pro, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica,Arial, sans-serif
+font-weight-base = normal
+font-size-base = 16
+font-lh-base = 24px
+
+font-helper($fontSize = font-size-base, $lineHeigh = font-lh-base, $fontFamily = font-sans-serif, $fontWeight = font-weight-base)
+  font-size   $fontSize px
+  line-height $lineHeigh px
+  font-family $fontFamily
+  font-weight $fontWeight
+
+font-s = font-helper(14, 20, font-sans-serif, normal)
+font-m = font-helper(16, 24, font-sans-serif, normal)
+font-xl = font-helper(40, 48, font-sans-serif, bold)
+
+body
+    font-helper(16, 24, font-sans-serif, normal)
