@@ -8,12 +8,8 @@ block html
     block head
     !=js("footer", {defer: true})
 
-  body.no-icons
+  body
     script head.fontTest();
 
-    if footer || (footer === undefined)
-      .page-wrapper(class=[sidebar && 'page-wrapper_sidebar_on'])
-        block body
-    else
       block body
 

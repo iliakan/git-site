@@ -1,16 +1,44 @@
 
 extends /layouts/body
 
-include /blocks/video/index
+include /blocks/playlist/index
+include /blocks/screencast-description/index
+include /blocks/video-player/index
 
 block main
   -
-    let videos = [{
-      name: "First"
-      }, {
-      name: "Second"
+    let sections = [{
+        name: "Введение",
+        shortcut: "intro",
+        videos: [{
+          id: "01",
+          name: "Что такое Git?",
+          duration: "0:51"
+        }, {
+          id: "02",
+          name: "Установка Git под Linux и Mac",
+          duration: "1:25"
+        }]
+    }, {
+        name: "Конфигурация",
+        shortcut: "configuration",
+        videos: [{
+          id: "06",
+          name: "Основная конфигурация",
+          duration: "3:20"
+        }, {
+          id: "07",
+          name: "Алиасы (псевдонимы для команд)",
+          duration: "2:05"
+        }]      
     }]
 
+  +b(class='page')
+    main(class="page__main")
+      +video-player()
+      +screencast-description()
 
-  +video({text:"HELLO WORLD", videos})
+    aside(class="page__nav playlist")
+      +playlist({sections})
+
 
