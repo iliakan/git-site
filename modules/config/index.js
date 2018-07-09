@@ -78,6 +78,6 @@ require.extensions['.yml'] = function(module, filename) {
 config.webpack = require('./webpack')(config);
 
 const t = require('i18n');
-t.requirePhrase('config');
+t.requirePhrase('');
 
 

@@ -172,7 +172,7 @@ module.exports = function (config) {
       // allow require('styles') which looks for styles/index.styl
       extensions: ['.js', '.styl'],
       alias: {
-        config: 'client/config',
+        config: 'client/config'
       },
       modules: modulesDirectories
     },
