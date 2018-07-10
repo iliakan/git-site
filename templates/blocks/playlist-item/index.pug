@@ -2,4 +2,12 @@ mixin playlist-item(data)
   - let {video} = data;
 
   +b.playlist-item
-    = video.name
+
+    +e.__id
+      = video.id
+
+    +e.__name
+      = video.name
+
+    +e.__duration
+      = video.duration

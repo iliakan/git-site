@@ -3,11 +3,12 @@ include /blocks/playlist-item/index
 mixin playlist(data)
   - let {sections} = data;
 
-  each section in sections
-    +b(class="playlist-section " + section.shortcut)
-        +e.__title
-          = section.name
+  +b.playlist
+    each section in sections
+      +b(class="playlist-section " + section.shortcut)
+          +e.__title
+            = section.name
 
-        +e.__videos
-          each video in section.videos
-            +playlist-item({video})
+          +e.__videos
+            each video in section.videos
+              +playlist-item({video})

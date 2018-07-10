@@ -1,0 +1,8 @@
+include /blocks/language-selector/index
+include /blocks/screencast-info/index
+
+mixin screencast-header(data)
+  
+  +b.screencast-header
+    +screencast-info()
+    +language-selector()

@@ -4,6 +4,7 @@ extends /layouts/body
 include /blocks/playlist/index
 include /blocks/screencast-description/index
 include /blocks/video-player/index
+include /blocks/screencast-header/index
 
 block main
   -
@@ -35,10 +36,12 @@ block main
 
   +b(class='page')
     main(class="page__main")
-      +video-player()
-      +screencast-description()
+      +b.page__main-inner
+        +screencast-header()
+        +video-player()
+        +screencast-description()
 
-    aside(class="page__nav playlist")
+    aside(class="page__nav")
       +playlist({sections})
 
 
