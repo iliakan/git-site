@@ -1,0 +1,15 @@
+include /blocks/screencast-tabs/index
+include /blocks/screencast-description/index
+include /blocks/screencast-comments/index
+include /blocks/screencast-subscribe/index
+
+mixin screencast-meta(data)
+
+    +b.screencast-meta
+
+        +e('h1').__title Скринкаст по GIT
+        +e.__tabs
+            +screencast-tabs()
+            +screencast-description()
+            +screencast-comments()
+            +screencast-subscribe()

@@ -1,3 +1,13 @@
 mixin language-selector(data)
+  - 
+    let {languages} = data;
+    let currentLang = "RU"
   
   +b.language-selector
+    each language in languages
+      if language.nameShort == currentLang
+        +e('span').__item.__item-active 
+          = language.nameShort        
+      else
+        +e('a').__item.link(href="http://javascript.info") 
+          = language.nameShort

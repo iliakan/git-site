@@ -1,0 +1,22 @@
+.screencast-tabs
+    margin space-stack-l
+    border-bottom 1px solid color-grey-90
+    display flex
+    flex-wrap nowrap
+    justify-content space-between
+
+    &__container
+        display flex
+
+    &__tab
+        color color-grey-60
+        padding space-inset-stretch
+        text-decoration none
+    
+    &__tab--active
+        color color-red-accent
+        border-bottom 2px solid color-red-accent
+        margin-bottom -1px
+    
+    a:hover
+        color darken(color-grey-60, 30%)

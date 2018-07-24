@@ -2,17 +2,27 @@
     padding space-inset-default
     display flex
     flex-wrap nowrap
-    justify-content space-around
+    justify-content space-between
     align-items stretch
     width 100%
+
+    &:hover
+        cursor pointer
+
 
     &__id
         color color-grey-80
         width 40px
         flex 0 0 40px
+
+        ^[0]:hover &
+            color color-red-accent
     
     &__name
         width 100%
+
+        ^[0]:hover &
+            color color-red-accent
 
     &__duration
         color color-grey-80

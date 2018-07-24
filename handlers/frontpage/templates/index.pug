@@ -2,7 +2,7 @@
 extends /layouts/body
 
 include /blocks/playlist/index
-include /blocks/screencast-description/index
+include /blocks/screencast-meta/index
 include /blocks/video-player/index
 include /blocks/screencast-header/index
 
@@ -19,6 +19,18 @@ block main
           id: "02",
           name: "Установка Git под Linux и Mac",
           duration: "1:25"
+        }, {
+          id: "03",
+          name: "Настройка профиля под Unix-системами",
+          duration: "1:40"
+        }, {
+          id: "04",
+          name: "Установка Git под Windows",
+          duration: "2:30"
+        }, {
+          id: "05",
+          name: "Windows: Git Bash, Powershell",
+          duration: "3:40"
         }]
     }, {
         name: "Конфигурация",
@@ -31,17 +43,91 @@ block main
           id: "07",
           name: "Алиасы (псевдонимы для команд)",
           duration: "2:05"
-        }]      
+        }, {
+          id: "08",
+          name: "Проблема с переводами строк Windows/Linux",
+          duration: "2:05"
+        }, {
+          id: "09",
+          name: "Настройка core.autocrlf для нормализации переводов строк",
+          duration: "2:05"
+        }, {
+          id: "10",
+          name: "Настройка редактора",
+          duration: "2:05"
+        }, {
+          id: "11",
+          name: "Атрибуты: .gitattributes, text, eol",
+          duration: "2:05"
+        }, {
+          id: "12",
+          name: "Игнорирование: .gitignore",
+          duration: "2:05"
+        }, {
+          id: "13",
+          name: "Подключение файлов в конфиг: include",
+          duration: "2:05"
+        }]
+    }, {
+        name: "Основы",
+        shortcut: "basics",
+        videos: [{
+          id: "14",
+          name: "Создание репозитория, первый коммит",
+          duration: "0:51"
+        }, {
+          id: "15",
+          name: "Добавление файлов и директорий, git status",
+          duration: "1:25"
+        }, {
+          id: "16",
+          name: "Коммиты без git add",
+          duration: "1:40"
+        }, {
+          id: "17",
+          name: "Удаление и переименование файлов",
+          duration: "2:30"
+        }]
+    }, {
+        name: "Ветки",
+        shortcut: "branches",
+        videos: [{
+          id: "18",
+          name: "Введение в ветки",
+          duration: "0:51"
+        }, {
+          id: "19",
+          name: "Создание и переключение веток",
+          duration: "1:25"
+        }, {
+          id: "20",
+          name: "Команда checkout при незакоммиченных изменениях",
+          duration: "1:40"
+        }, {
+          id: "21",
+          name: "Передвижение веток вручную",
+          duration: "2:30"
+        }]
+    }]
+  
+    let languages = [{
+        name: "English",
+        nameLocal: "English",
+        nameShort: "EN"
+      },{
+        name: "Russian",
+        nameLocal: "Русский",
+        nameShort: "RU"
     }]
 
-  +b(class='page')
-    main(class="page__main")
-      +b.page__main-inner
-        +screencast-header()
+  +b.page.working-hover
+    +e(main).__main
+      +e.__main-inner
+        +screencast-header({languages})
         +video-player()
-        +screencast-description()
+        +screencast-meta()
 
-    aside(class="page__nav")
+    +e(aside).__nav
       +playlist({sections})
 
 

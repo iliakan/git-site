@@ -1,0 +1,19 @@
+.language-selector
+    display flex
+
+    &__item
+        font-helper(14, 20, font-sans-serif, normal)
+        padding 2px 4px 0
+        border 1px solid color-grey-60
+        border-radius 2px
+        margin-left space-xs
+        text-decoration none
+        color color-grey-60
+    
+    &__item-active
+        color color-red-accent
+        border-color color-red-accent
+    
+    a:hover
+        border-color darken(color-grey-60, 30%)
+        color darken(color-grey-60, 30%)
