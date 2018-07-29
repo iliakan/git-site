@@ -5,12 +5,27 @@
     flex-wrap nowrap
     justify-content space-between
 
+    +size-phone-only()
+        overflow-x auto
+        -webkit-overflow-scrolling touch
+        -ms-overflow-style -ms-autohiding-scrollbar
+
+    &::-webkit-scrollbar
+        width 0
+        height 0
+
+    &::-webkit-scrollbar-track
+        display none
+    
+    > *
+        flex 0 0 auto
+
     &__container
         display flex
 
     &__tab
         color color-grey-60
-        padding space-inset-stretch
+        padding space-inset-s
         text-decoration none
     
     &__tab--active

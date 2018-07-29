@@ -8,6 +8,18 @@
     flex-wrap nowrap
     justify-content space-between
     align-items stretch
+    background color-white
+
+    +size-phone-only()
+        position fixed
+        bottom 0
+        left 0
+        right 0
+        z-index 2
+        box-shadow 0px -2px 16px rgba(0, 0, 0, 0.15)
+        font-helper(14, 20, font-sans-serif, normal)
+        padding space-inset-s
+        border none
 
     &__video-id
         flex-grow 0
@@ -16,6 +28,9 @@
         margin-right space-m
         margin-top space-xs
 
+        +size-phone-only()
+            margin-right space-s
+
     &__video-name
         flex-grow 1
         margin-top space-xs
@@ -23,4 +38,3 @@
     
     &__video-controls
         flex-grow 0
-

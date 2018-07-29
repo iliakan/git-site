@@ -6,9 +6,12 @@
     align-items stretch
     width 100%
 
+    +size-phone-only()
+        font-helper(14, 20, font-sans-serif, normal)
+        padding space-inset-s
+
     &:hover
         cursor pointer
-
 
     &__id
         color color-grey-80
@@ -17,6 +20,10 @@
 
         ^[0]:hover &
             color color-red-accent
+        
+        +size-phone-only()
+            width 32px
+            flex 0 0 32px
     
     &__name
         width 100%

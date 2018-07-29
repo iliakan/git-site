@@ -3,9 +3,17 @@
     max-width 50em
     padding 0 0 0 40px
 
+    +size-phone-only()
+        padding 0
+
     &__title
         font-helper(40, 48, font-sans-serif, bold)
         margin space-stack-m
-    
+
+        +size-phone-only()
+            font-helper(20, 28, font-sans-serif, bold)
+            margin 0
+            padding space-inset-s
+
     p
         margin space-stack-m
