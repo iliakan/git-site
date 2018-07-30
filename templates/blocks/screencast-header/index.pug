@@ -1,9 +1,9 @@
 include /blocks/language-selector/index
-include /blocks/screencast-summary/index
+include /blocks/screencast-heading/index
 
 mixin screencast-header(data)
   - let {languages} = data;
   
   +b.screencast-header
-    +screencast-summary()
+    +screencast-heading()
     +language-selector({languages})

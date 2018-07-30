@@ -2,13 +2,14 @@
     max-width layout-sidebar-max-width
     padding space-inset-default
 
-    +size-phone-only()
+    +size-tablet-portrait-down()
         padding 0
+        max-width 100%
 
 .playlist-section
     margin space-stack-l
 
-    +size-phone-only()
+    +size-tablet-portrait-down()
         margin space-stack-s
 
     .playlist-section__title
@@ -17,7 +18,7 @@
         font-helper(16, 24, font-sans-serif, bold)
         letter-spacing 3px
 
-        +size-phone-only()
+        +size-tablet-portrait-down()
             font-helper(14, 20, font-sans-serif, bold)
             letter-spacing 2px
             padding 4px 16px 4px 48px // custom padding for this specific element to align text visually
