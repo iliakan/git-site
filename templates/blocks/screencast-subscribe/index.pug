@@ -1,3 +1,9 @@
+include /blocks/button/index
+
 mixin screencast-subscribe(data)
 
-    +b.screnncast-subscribe Подписаться на обновления
+    +b.screnncast-subscribe 
+        form(action='/subscribe', method='POST')
+            +e('h2').__heading Подписаться на обновления
+            +e('input').__input-email(type='text', name='email', placeholder='Email')
+            +button({mod:"primary", tag: "button"}) Подписаться
