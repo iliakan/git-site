@@ -47,3 +47,4 @@ out/*
 public/*
 package-lock.json
 
+/cache/*
