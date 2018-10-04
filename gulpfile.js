@@ -58,13 +58,13 @@ function requireModuleTasks(moduleName) {
 gulp.task("nodemon", lazyRequireTask('./tasks/nodemon', {
   // shared client/server code has require('template.jade) which precompiles template on run
   // so I have to restart server to pickup the template change
-  ext:    "js,pug",
+  ext:    "js,yml",
 
   nodeArgs: process.env.NODE_DEBUG  ? ['--debug'] : [],
   script: "./bin/server.js",
   //ignoreRoot: ['.git', 'node_modules'].concat(glob.sync('{handlers,modules}/**/client')), // ignore handlers' client code
-  ignore: ['**/client/'], // ignore handlers' client code
-  watch:  ["handlers", "modules"]
+  ignore: ['**/client/', 'public'], // ignore handlers' client code
+  watch:  ["modules"]
 }));
 
 gulp.task("client:livereload", lazyRequireTask("./tasks/livereload", {
@@ -82,34 +82,20 @@ gulp.task("client:livereload", lazyRequireTask("./tasks/livereload", {
 }));
 
 
-gulp.task('watch', lazyRequireTask('./tasks/watch', {
-  root:        __dirname,
-  // for performance, watch only these dirs under root
-  dirs: ['assets', 'styles'],
-  taskMapping: [
-    {
-      watch: 'assets/**',
-      task:  'client:sync-resources'
-    }
-  ]
-}));
-
-
+requireModuleTasks('screencast');
 
 gulp.task('client:minify', lazyRequireTask('./tasks/minify'));
 gulp.task('client:resize-retina-images', lazyRequireTask('./tasks/resizeRetinaImages'));
 
-gulp.task('client:webpack', lazyRequireTask('./tasks/webpack'));
+
+gulp.task('build', ['webpack']);
+
+gulp.task('webpack', lazyRequireTask('./tasks/webpack'));
 // gulp.task('client:webpack-dev-server', lazyRequireTask('./tasks/webpackDevServer'));
-
-
-gulp.task('build', function(callback) {
-  runSequence("client:sync-resources", 'client:webpack', callback);
-});
 
 gulp.task('server', lazyRequireTask('./tasks/server'));
 
-gulp.task('dev', ['nodemon', 'client:livereload', 'client:webpack', 'watch']);
+gulp.task('dev', ['nodemon', 'client:livereload', 'webpack']);
 
 gulp.on('err', function(gulpErr) {
   if (gulpErr.err) {

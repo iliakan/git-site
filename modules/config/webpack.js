@@ -44,7 +44,7 @@ module.exports = function () {
   /**
    * handler/client/assets/* goes to public/assets/
    */
-  let assetPaths = [];
+  let assetPaths = [config.assetsRoot];
   for (let handlerName in config.handlers) {
     let handlerPath = config.handlers[handlerName].path;
     let from = `${handlerPath}/client/assets`;
@@ -199,6 +199,19 @@ module.exports = function () {
 
     node: {
       fs: 'empty'
+    },
+
+    performance: {
+      maxEntrypointSize: 350000,
+      maxAssetSize: 350000, // warning if asset is bigger than 300k
+      assetFilter(assetFilename) {  // only check js/css
+        // ignore assets copied by CopyWebpackPlugin
+        if (assetFilename.startsWith('..')) { // they look like ../courses/achievements/course-complete.svg
+          // built assets do not have ..
+          return false;
+        }
+        return assetFilename.endsWith('.js') || assetFilename.endsWith('.css');
+      }
     },
 
     plugins: [

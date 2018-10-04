@@ -42,6 +42,13 @@ let config = module.exports = {
     host: env.HOST || 'localhost'
   },
 
+  mongoose: require('./mongoose'),
+
+  cloudflare: {
+    url:    'https://www.cloudflare.com/api_json.html',
+    apiKey: secret.cloudflare.apiKey,
+    email:  secret.cloudflare.email
+  },
 
 
   appKeys:  [secret.sessionKey],
@@ -63,12 +70,13 @@ let config = module.exports = {
 
   projectRoot:           process.cwd(),
   // public files, served by nginx
-  publicRoot:            path.join(process.cwd(), 'public'),
+  publicRoot:            path.join(process.cwd(), 'public', lang),
   // private files, for expiring links, not directly accessible
-  tmpRoot:               path.join(process.cwd(), 'tmp'),
+  tmpRoot:               path.join(process.cwd(), 'tmp', lang),
   localesRoot:           path.join(process.cwd(), 'locales'),
   // js/css build versions
-  cacheRoot:          path.join(process.cwd(), 'cache'),
+  cacheRoot:          path.join(process.cwd(), 'cache', lang),
+  assetsRoot:            path.join(process.cwd(), 'assets'),
 
   handlers: require('./handlers')
 };
@@ -83,5 +91,17 @@ t.requireHandlerLocales();
 
 config.webpack = require('./webpack');
 
+createRoot(config.publicRoot);
+createRoot(config.cacheRoot);
+createRoot(config.tmpRoot);
 
+function createRoot(root) {
+  // may be existing symlink
+  if (fs.existsSync(root) && fs.statSync(root).isFile()) {
+    fs.unlinkSync(root);
+  }
+  if (!fs.existsSync(root)) {
+    fs.ensureDirSync(root);
+  }
+}
 

@@ -25,7 +25,7 @@ download/
 archive/
 
 # database dump for tutorial export
-dump/
+/dump
 
 # extra handlers are not in the repo
 extra
@@ -34,7 +34,8 @@ extra
 node_modules/
 
 # TMP folder (run-time tmp)
-tmp/
+/tmp
+/cache
 
 # Manifest (build-generated content, versions)
 manifest/
