@@ -58,7 +58,7 @@ module.exports = function() {
 
       let youtube = google.youtube({
         version: 'v3',
-        auth:    'AIzaSyBcEZxJ9hOI_N7Mfla2sEYLDzPbd8Jdx5g'
+        auth:    'GOOGLE API KEY https://console.cloud.google.com/apis/credentials'
       });
 
       console.log("Playlist fetchItems");
