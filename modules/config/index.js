@@ -1,7 +1,7 @@
 // make sure Promise is wrapped early,
 // to assign mongoose.Promise = global.Promise the wrapped variant any time later
 let path = require('path');
-let fs = require('fs');
+let fs = require('fs-extra');
 let env = process.env;
 let yaml = require('js-yaml');
 
