@@ -1,38 +1,43 @@
 .playlist-item
-    padding space-inset-default
-    display flex
-    flex-wrap nowrap
-    justify-content space-between
-    align-items stretch
-    width 100%
+  padding space-inset-default
+  display flex
+  flex-wrap nowrap
+  justify-content space-between
+  align-items stretch
+  width 100%
+
+  &_active
+    & ^[0]__id,
+    & ^[0]__name
+      color color-red-accent
+
+  +size-tablet-portrait-down()
+    font-helper(14, 20, font-sans-serif, normal)
+    padding 16px 0
+
+  &:hover
+    cursor pointer
+
+  &__id
+    color color-grey-80
+    width 40px
+    flex 0 0 40px
+
+    ^[0]:hover &
+      color color-red-accent
 
     +size-tablet-portrait-down()
-        font-helper(14, 20, font-sans-serif, normal)
-        padding space-inset-s
+      width 32px
+      flex 0 0 32px
 
-    &:hover
-        cursor pointer
+  &__name
+    width 100%
 
-    &__id
-        color color-grey-80
-        width 40px
-        flex 0 0 40px
+    ^[0]:hover &
+      color color-red-accent
 
-        ^[0]:hover &
-            color color-red-accent
-        
-        +size-tablet-portrait-down()
-            width 32px
-            flex 0 0 32px
-    
-    &__name
-        width 100%
-
-        ^[0]:hover &
-            color color-red-accent
-
-    &__duration
-        color color-grey-80
-        width 60px
-        flex 0 0 60px
-        text-align right
+  &__duration
+    color color-grey-80
+    width 60px
+    flex 0 0 60px
+    text-align right

@@ -1,7 +1,8 @@
 'use strict';
 
-const Chapter = require('screencast/models/videoChapter');
-const YoutubeVideo = require('screencast/models/youtubeVideo');
+const Chapter = require('../models/videoChapter');
+const YoutubeVideo = require('../models/youtubeVideo');
+const t = require('jsengine/i18n');
 
 exports.get = async function(ctx, next) {
 
@@ -10,6 +11,23 @@ exports.get = async function(ctx, next) {
   });
 
   ctx.locals.sections = sections;
+
+  ctx.locals.title = t('title');
+
+  ctx.locals.languages = [
+    {
+      name: 'English',
+      nameLocal: 'English',
+      nameShort: 'EN',
+      href: 'https://git-site.com'
+    },
+    {
+      name: 'Russian',
+      nameLocal: 'Русский',
+      nameShort: 'RU',
+      href: 'https://git-site.ru'
+    }
+  ];
 
   ctx.body = ctx.render('index');
 };

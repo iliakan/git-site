@@ -5,10 +5,7 @@ include /blocks/screencast-subscribe/index
 
 mixin screencast-meta(data)
 
-    +b.screencast-meta
-
-        +e.__tabs
-            +screencast-tabs()
-            +screencast-description()
-            +screencast-comments()
-            +screencast-subscribe()
+  +b.screencast-meta
+    +e.__tabs
+      +screencast-tabs()
+    include /blocks/screencast-tabmodules/index

@@ -3,5 +3,6 @@ include /blocks/video-panel/index
 mixin video-player(data)
   
   +b.video-container
-    img.video-placeholder(src="https://api.monosnap.com/rpc/file/download?id=W0sPAqYkZOJTVN94KkKerNxpZHhFDg" alt="Image Title")
+    +e.player#player
+      img.video-placeholder(src="https://api.monosnap.com/rpc/file/download?id=W0sPAqYkZOJTVN94KkKerNxpZHhFDg" alt="Image Title")
     +video-panel()

@@ -9,7 +9,7 @@ set NODE_LANG=%1
 @set NODE_PATH=./handlers;./modules
 @set TUTORIAL_EDIT=1
 
-call gulp dev
+call gulp dev | bunyan
 
 goto :eof
 

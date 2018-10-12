@@ -52,6 +52,11 @@ module.exports = function(pathToMeta) {
 
       videoMeta.titleFull = (meta.levels === 2 ? (chapterNum + '.') : '') + videoNum + ' ' + videoMeta.titleFull;
 
+      videoMeta.slugFull = _.uniq([
+        chapterSlug,
+        videoSlug || 'starting-video'
+      ]).join('-');
+
       videoMeta.descriptionFull = _.uniq([
         meta.description,
         chapterMeta.description,

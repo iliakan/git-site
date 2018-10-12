@@ -30,6 +30,7 @@ const log = require('jsengine/log')();
 const execSync = require('child_process').execSync;
 const readMeta = require('../lib/readMeta');
 const playlistLib = require('../lib/playlistLib');
+const config = require('config');
 
 // TODO: prepare puts all in video-prepared, use it for upload
 
@@ -58,7 +59,7 @@ module.exports = function() {
 
       let youtube = google.youtube({
         version: 'v3',
-        auth:    'GOOGLE API KEY https://console.cloud.google.com/apis/credentials'
+        auth:    config.googleKey
       });
 
       console.log("Playlist fetchItems");
@@ -134,7 +135,7 @@ module.exports = function() {
 
           log.debug("update videoMeta", videoMeta);
           let youtubeVideo = await youtube.videos.list({
-            part: 'snippet,status,id',
+            part: 'snippet,status,id,contentDetails',
             id:   videoMeta.playlistItem.snippet.resourceId.videoId
           });
 
@@ -147,7 +148,7 @@ module.exports = function() {
 
 
           let video = await Video.create({
-            slug:        videoSlug,
+            slug:        videoMeta.slugFull,
             chapter:     chapter,
             description: videoMeta.description,
             title:       videoMeta.title,

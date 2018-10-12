@@ -1,13 +1,7 @@
 mixin playlist-item(data)
   - let {video} = data;
 
-  +b.playlist-item
-
-    +e.__id
-      = video.id
-
-    +e.__name
-      = video.name
-
-    +e.__duration
-      = video.duration
+  +b.playlist-item(data-video-id=video.youtube.id, data-mnemo=video.slug, data-duration=video.getDuration())
+    +e.__id= video.getWeight()
+    +e.__name= video.title
+    +e.__duration= video.displayDuration()

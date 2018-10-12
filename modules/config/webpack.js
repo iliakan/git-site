@@ -91,7 +91,8 @@ module.exports = function () {
     profile: Boolean(process.env.WEBPACK_STATS),
 
     entry: {
-      styles: config.tmpRoot + '/styles.styl'
+      styles: config.tmpRoot + '/styles.styl',
+      script: 'client/init',
     },
 
     module: {

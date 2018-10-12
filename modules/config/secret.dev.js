@@ -4,4 +4,5 @@
 module.exports = {
   sessionKey: "KillerIsJim",
   adminKey:   'admin',
+  cloudflare: {}
 };

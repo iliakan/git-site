@@ -50,6 +50,7 @@ let config = module.exports = {
     email:  secret.cloudflare.email
   },
 
+  googleKey: secret.googleKey,
 
   appKeys:  [secret.sessionKey],
   adminKey: secret.adminKey,

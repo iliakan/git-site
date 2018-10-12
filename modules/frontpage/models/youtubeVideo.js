@@ -248,5 +248,27 @@ let schema = new Schema({
   }
 }, {timestamps: true});
 
+schema.methods.getDuration = function() {
+  const duration = this.youtube.contentDetails.duration;
+  let hours = duration.match(/(\d+)H/);
+  let minutes = duration.match(/(\d+)M/);
+  let seconds = duration.match(/(\d+)S/);
+  if (hours) hours = hours[1] * 24 * 60;
+  if (minutes) minutes = minutes[1] * 60;
+  if (seconds) seconds = parseInt(seconds[1]);
+  return (hours || 0) + (minutes || 0) + (seconds || 0);
+};
+
+schema.methods.displayDuration = function() {
+  let time = this.getDuration();
+  const hours = ('0' + Math.floor(time / (60 * 24))).slice(-2);
+  const minutes = ('0' + Math.floor(time / 60)).slice(-2);
+  const seconds = ('0' + (time % 60)).slice(-2);
+  return (hours === '00' ? '' : hours + ':') + `${minutes}:${seconds}`;
+}
+
+schema.methods.getWeight = function() {
+  return ('0' + this.weight).slice(-2);
+}
 
 module.exports = mongoose.model('YoutubeVideo', schema);
