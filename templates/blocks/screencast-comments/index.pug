@@ -1,3 +1,9 @@
 mixin screencast-comments(data)
+  +b.comments.formatted(id="comments")
+  //- disqus_url gets correct host only in production
+  if disqusEnabled
+    #disqus_thread
 
-    +b.screencast-comments Комментарии
+    script var disqus_config = function () { if (!this.page) this.page = {}; Object.assign(this.page, !{escapeJSON(disqusConfig)}); };
+    script var disqus_shortname = !{escapeJSON(disqusDomain)};
+    script var disqus_enabled = true;

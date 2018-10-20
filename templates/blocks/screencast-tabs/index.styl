@@ -1,43 +1,44 @@
 .screencast-tabs
-    margin space-stack-l
-    border-bottom 1px solid color-grey-90
+  margin space-stack-l
+  border-bottom 1px solid color-grey-90
+  display flex
+  flex-wrap nowrap
+  justify-content space-between
+
+  +size-tablet-portrait-down()
+    overflow-x auto
+    -webkit-overflow-scrolling touch
+    -ms-overflow-style -ms-autohiding-scrollbar
+
+  &::-webkit-scrollbar
+    width 0
+    height 0
+
+  &::-webkit-scrollbar-track
+    display none
+
+  > *
+    flex 0 0 auto
+
+  &__container
     display flex
-    flex-wrap nowrap
-    justify-content space-between
+
+  &__tab
+    color color-grey-60
+    padding space-inset-s
+    text-decoration none
+    cursor pointer
+
+  &__tab.active
+    color color-red-accent
+    border-bottom 2px solid color-red-accent
+    margin-bottom -1px
+
+  &__tab_playlist
+    display none
 
     +size-tablet-portrait-down()
-        overflow-x auto
-        -webkit-overflow-scrolling touch
-        -ms-overflow-style -ms-autohiding-scrollbar
+      display block
 
-    &::-webkit-scrollbar
-        width 0
-        height 0
-
-    &::-webkit-scrollbar-track
-        display none
-    
-    > *
-        flex 0 0 auto
-
-    &__container
-        display flex
-
-    &__tab
-        color color-grey-60
-        padding space-inset-s
-        text-decoration none
-    
-    &__tab--active
-        color color-red-accent
-        border-bottom 2px solid color-red-accent
-        margin-bottom -1px
-    
-    &__tab--mobile
-        display none
-
-        +size-tablet-portrait-down()
-            display block
-    
-    a:hover
-        color darken(color-grey-60, 30%)
+  a:hover
+    color darken(color-grey-60, 30%)

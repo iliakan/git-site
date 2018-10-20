@@ -82,7 +82,7 @@ gulp.task("client:livereload", lazyRequireTask("./tasks/livereload", {
 }));
 
 
-requireModuleTasks('screencast');
+requireModuleTasks('frontpage');
 
 gulp.task('client:minify', lazyRequireTask('./tasks/minify'));
 gulp.task('client:resize-retina-images', lazyRequireTask('./tasks/resizeRetinaImages'));

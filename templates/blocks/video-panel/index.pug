@@ -2,7 +2,13 @@ include /blocks/video-controls/index
 
 mixin video-panel(data)
 
-    +b.video-panel
-        +e.__video-id 03
-        +e.__video-name Настройка профиля под Unix-системами
-        +video-controls()
+  +b.video-panel
+    +e.playline
+      +e.activeline
+      +e.played
+      +e.hoverline
+      +e.tooltip
+    +e.controls
+      +e.__video-id 01
+      +e.__video-name Что такое Git?
+      +video-controls()

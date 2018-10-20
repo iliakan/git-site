@@ -1,10 +1,20 @@
 .video-container
-    margin space-stack-xxl
-    
-    +size-tablet-portrait-down()
-        margin space-stack-xs
+  margin space-stack-xxl
+
+  &_playing
+    & .pause
+      display block
+
+    & .play
+      display none
+
+  +size-tablet-portrait-down()
+    margin space-stack-xs
+
+  &__player
+    display block
 
 .video-placeholder
-    width 100%
-    height auto
-    display block
+  width 100%
+  height auto
+  display block

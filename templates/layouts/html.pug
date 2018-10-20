@@ -6,10 +6,7 @@ block html
     block variables
     include ../blocks/head
     block head
-    !=js("footer", {defer: true})
+    !=js("script", {defer: true})
 
   body
-    script head.fontTest();
-
-      block body
-
+    block body

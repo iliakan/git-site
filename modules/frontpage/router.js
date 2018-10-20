@@ -1,10 +1,5 @@
-var Router = require('koa-router');
+const Router = require('koa-router');
+const router = module.exports = new Router();
+const index = require('./controller/index');
 
-var glob = require('glob');
-var path = require('path');
-var router = module.exports = new Router();
-
-router.get('/', async function (ctx) {
-  ctx.body = ctx.render('index');
-
-});
+router.get('/', index.get);

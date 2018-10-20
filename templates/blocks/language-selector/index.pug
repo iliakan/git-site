@@ -9,5 +9,5 @@ mixin language-selector(data)
         +e('span').__item.__item-active 
           = language.nameShort        
       else
-        +e('a').__item.link(href="http://javascript.info") 
+        +e('a').__item.link(href=language.href)
           = language.nameShort

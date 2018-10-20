@@ -1,49 +1,47 @@
 body
 
-    // Removing aqccidental scroll bars in chrome for body
-    &::-webkit-scrollbar
-        width 0
+  // Removing aqccidental scroll bars in chrome for body
+  &::-webkit-scrollbar
+    width 0
 
-    &::-webkit-scrollbar-track
-        display none
+  &::-webkit-scrollbar-track
+    display none
 
-.page 
-    height 100vh
-    display flex    
-    flex-direction row
+.page
+  height 100vh
+  display flex
+  flex-direction row
 
-    +size-tablet-portrait-down()
-        display block
-        height 100%
-        padding-bottom 80px // to free up space for the fixed bottom bar
+  +size-tablet-portrait-down()
+    display block
+    height 100%
+    padding-bottom 80px // to free up space for the fixed bottom bar
 
 .page__main
-    order 1
-    flex 2
-    overflow-y auto
-    display flex
-    justify-content flex-end
+  order 1
+  flex 2
+  overflow-y auto
 
-    // Hiding scrollbar for main content section in chrome
-    &::-webkit-scrollbar
-        width 0
+  // Hiding scrollbar for main content section in chrome
+  &::-webkit-scrollbar
+    width 0
 
-    &::-webkit-scrollbar-track
-        display none
+  &::-webkit-scrollbar-track
+    display none
 
-    .page__main-inner
-        width 100%
-        max-width layout-content-max-width
-        padding 32px 56px
-
-        +size-tablet-portrait-down()
-            padding 0
-
-.page__nav
-    order 2
-    flex 1
-    overflow-y scroll
-    border-left 1px solid color-grey-90
+  .page__main-inner
+    width 100%
+    max-width layout-content-max-width
+    padding 32px 56px
 
     +size-tablet-portrait-down()
-        overflow-y auto
+      padding 0
+
+.page__nav
+  order 2
+  flex 1
+  overflow-y scroll
+  border-left 1px solid color-grey-90
+
+  +size-tablet-portrait-down()
+    display none

@@ -1,2 +1,0 @@
-require('./dom');
-require('./string');

@@ -40,4 +40,6 @@ Spinner.prototype.stop = function() {
   }
 };
 
+window.Spinner = Spinner;
+
 module.exports = Spinner;

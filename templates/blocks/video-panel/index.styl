@@ -1,4 +1,5 @@
-.video-panel 
+.video-panel
+  &__controls
     padding space-inset-default
     border 1px solid color-grey-90
     border-top none
@@ -11,30 +12,73 @@
     background color-white
 
     +size-tablet-portrait-down()
-        position fixed
-        bottom 0
-        left 0
-        right 0
-        z-index 2
-        box-shadow 0px -2px 16px rgba(0, 0, 0, 0.15)
-        font-helper(14, 20, font-sans-serif, normal)
-        padding space-inset-s
-        border none
+      position fixed
+      bottom 0
+      left 0
+      right 0
+      z-index 2
+      box-shadow 0px -2px 16px rgba(0, 0, 0, 0.15)
+      font-helper(14, 20, font-sans-serif, normal)
+      padding space-inset-s
+      border none
 
-    &__video-id
-        flex-grow 0
-        min-width 24px
-        color color-red-accent
-        margin-right space-m
-        margin-top space-xs
+  &__playline
+    height 4px
+    background #e2e2e2
+    position relative
 
-        +size-tablet-portrait-down()
-            margin-right space-s
+    &:hover
+      & ^[0]__tooltip
+        display inline-block
 
-    &__video-name
-        flex-grow 1
-        margin-top space-xs
+  &__hoverline
+    position absolute
+    width 0
+    height 100%
+    background #ff8d7e
+    top 0
+    z-index 2
 
-    
-    &__video-controls
-        flex-grow 0
+  &__activeline
+    position absolute
+    cursor pointer
+    width 100%
+    height 16px
+    top -6px
+    z-index 4
+
+  &__played
+    position relative
+    background color-red-accent
+    height 100%
+    width 0
+    z-index 3
+
+  &__tooltip
+    display none
+    position absolute
+    background #1b1b1b
+    font-size 12px
+    line-height 14px
+    top -28px
+    left 0
+    z-index 3
+    padding 4px 7px
+    color #fff
+
+  &__video-id
+    flex-grow 0
+    min-width 24px
+    color color-red-accent
+    margin-right space-m
+    margin-top space-xs
+
+    +size-tablet-portrait-down()
+      margin-right space-s
+
+  &__video-name
+    flex-grow 1
+    margin-top space-xs
+
+  &__video-controls
+    flex-grow 0

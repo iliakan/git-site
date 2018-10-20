@@ -49,3 +49,5 @@ public/*
 package-lock.json
 
 /cache/*
+
+modules/jsengine/

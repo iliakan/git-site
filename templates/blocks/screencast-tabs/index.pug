@@ -2,10 +2,9 @@ include /blocks/share-buttons/index
 
 mixin screencast-tabs(data)
 
-    +b.screencast-tabs
-        +e.__container
-            +e.__tab.__tab--mobile Содержание
-            +e.__tab.__tab--active Описание
-            +e('a').__tab(href="#") Комментарии
-            +e('a').__tab(href="#") Подписаться на обновления
-        +share-buttons()
+  +b.screencast-tabs
+    +e.__container
+      +e.__tab._playlist(data-id='playlist')= t('playlist')
+      +e('a').__tab._description.active(data-id='description')= t('description')
+      +e('a').__tab(data-id='comments')= t('comments')
+    +share-buttons()
